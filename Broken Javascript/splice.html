@@ -1,0 +1,51 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <script type = 'text/javascript' src='/jquery.js'></script>
+   
+    <script type = 'text/javascript' src='/home/Logan/DNA/splicing/splice4.js'></script> <!-- Don't judge me -->
+    <script type = 'text/javascript'>
+      function execute() {
+        parseDNA($('#exwindow').val(),$('#inwindow').val(),$('#mrinput').val(),$('#dninput').val());
+      }
+    </script>
+    <style type = 'text/css'>
+      body {
+        font-family: monospace;
+        font-size: 10pt;
+      }
+      
+      #holder {
+        
+      }
+      
+      .display {
+        position: relative;
+        margin-top: 3px;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .input {
+        width: 90%;
+        height: 200px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <textarea placeholder = 'mature mRNA' class = 'input' id='mrinput'></textarea>
+    <br>
+    <textarea class = 'input' placeholder = 'DNA' id='dninput'></textarea>
+    <br>
+    <input type = 'number' placeholder = 'Exon Window (integer)' id = 'exwindow' />
+    <input type = 'number' placeholder = 'Intron Window (integer)' id = 'inwindow' />
+    <br>
+    <button id = 'compare' onclick='execute()'>Find Exons and Introns</button>
+    <br>
+    <hr noshade size=4 width="100%">
+    <div id='holder'></div>
+  </body>
+</html>

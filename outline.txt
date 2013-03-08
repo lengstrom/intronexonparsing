@@ -1,0 +1,101 @@
+if (exonwindow or 2 (greater) first few letters do not match the exonwindow) {
+    run intronparsing with position of 0
+}
+
+else if {exonwindow or 2 (greater) letters match the exonwindow) {
+    run exonparsing with position of 0
+}
+
+//rna position is ALWAYS the last one+1 it did
+//dnapos is where the last GT was
+//opos + in / ex window
+//then set opos - in / ex window afterwards yo
+
+intronparsing:
+    find first GT
+   	 if there is no GT { throw error; exit}
+   	 else
+   		 find second GT
+   			 if there isn't another GT'
+   				 if GT = dseq.length - 1
+   					 introns.push(opos, GT + 1)
+   					 printdata()
+   				 else
+   					 introns.push(opos, GT+1)
+   					 exons.push(GT + 2, dseq.length)
+   					 printdata()
+   			 else:
+   				 if GT2 - GT1 - 2 <= 4
+   					 if exwindow characters after GT1 match mRNA
+   						 create intron (opos -> GT1 + 1)
+   						 set dloc to GT1 + 2
+   						 parse    exon(GT^1 + 2)
+   					 else if exwindow characters after GT2 (and match mRNA
+   						 create intron (opos -> GT1 + 1)
+   						 set dloc to GT2 + 2
+   						 parse    exon(GT^1 + 2)
+   					 else
+   						 set dloc to GT^2R
+   						 parseintrons(originalposition)
+   				 find the first AG between the GT^1 + ex window and GT^2
+   					 if there is an AG:
+   						 look between GT^1 and AG to see whether they match appropriate RNA
+   							 if yes:    
+   								 set dloc to GT^1 + 2
+   								 create an intron at originalposition -> GT^1 + 1
+   								 do parseexons(GT^1 + 2)
+   							 if no:
+   								 set dloc to GT^2
+   								 do parseintrons(originalposition)
+   					 if there is not an AG
+   						 look between GT^1 and GT^2 and see whether they match the appropriate RNA
+   							 if yes:
+   								 set dloc to GT^2 + 2
+   								 create an intron at [originalposition -> GT^1 + 1]
+   								 do parseexons(GT^1 + 2)
+   							 if no:
+   								 set dloc to GT^2
+   								 do parseintrons(originalposition)
+
+parseexons
+    find first AG
+   	 if no AGs {exons.push(opos, dseq.length; printdata())
+   	 if AG:
+   		 look for another AG:
+   			 if no:
+   				 if dseq.length - AG^1 > intronwindow
+   					 exons.push(opos,dseq.length)
+   				 /*if AG  to AG + inwindow - 2 != corresponding mRNA
+   					 exons.push(orpos,AGpos - 1)
+   					 rloc = rloc + AG -  opos
+   					 dloc = AG
+   					 parseintrons(agpos1) */
+   				 else
+   					 exons.push(orpos, AGpos-1)
+   					 rloc = rloc + AG - opos
+   					 dloc = AG
+   					 parseintrons(AGpos1)
+   			 else
+               look between AG^1 and AG^2
+      				 if AG^2 - AG^1 < = 6 //potential error
+      					 look for the next AG    
+      							 errormargin = errormargin + ((AG^3 - AG^1)+(AG^3 - AG^2)+(AG^2 - AG^1)/(AG^3 - AG^1) ^4)
+      							 elif AG^1  -> AG^2  matches mRNA
+                              rloc = rloc + AG^
+                              parseexons()
+      								 elif AG^1 -> AG^3 matches mRNA
+                                 else 
+      				 elif mrna matches rna:
+      					 rloc = rloc + AG^1 - opos
+      					 dloc = AG^1
+      					 parseexons(opos)
+      				 else:
+      					 rloc = rloc + AG^1 - opos + (- 1 + 1)
+      					 dloc = AGpos^1
+      					 exons.push([opos,AGpos^1-1]);
+      					 parseintrons(opos)
+      					 
+
+   A A G T G T A G G
+   1 2 3 4 5 6 7 8 9
+
