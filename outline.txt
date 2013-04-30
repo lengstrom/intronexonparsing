@@ -95,7 +95,10 @@ parseexons
       					 exons.push([opos,AGpos^1-1]);
       					 parseintrons(opos)
       					 
-
    A A G T G T A G G
    1 2 3 4 5 6 7 8 9
 
+print data:
+    print every single letter of intron sequence
+    if index is between any arrays listed in exons[]:
+        print out letter in rna partition
